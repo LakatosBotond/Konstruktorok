@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Könyvtárkezelő rendszer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Könyvtárkezelő rendszer</h1>
+
+        <div class="panel">
+            <h2>Új könyv hozzáadása</h2>
+
+            <form>
+                <label for="cim">Cím:</label>
+                <input type="text" id="cim" placeholder="Könyv címe">
+
+                <label for="szerzo">Szerző:</label>
+                <input type="text" id="szerzo" placeholder="Szerző neve">
+
+                <label for="kiadasiEv">Kiadási év:</label>
+                <input type="number" id="kiadasiEv" placeholder="Kiadási év">
+
+                <label for="oldalszam">Oldalszám:</label>
+                <input type="number" id="oldalszam" placeholder="Oldalak száma">
+
+                <button type="button" id="HozzaadasBtn">Könyv hozzáadása(és összes könyv megjelenitése :3)</button>
+            </form>
+        </div>
+
+        <div class="panel">
+            <h2>Könyvek listája</h2>
+
+            <div class="konyvek" id="konyvek">
+
+
+            </div>
+        </div>
+
+        <div>
+            <h2>Funkciok</h2>
+
+            <div class="Funkciók" id="Funkciók">
+                <button type="button" id="osszesKonyv" >Összes könyv</button>
+                <button type="button" id="SzabadSzures">Szabad könyvek</button>
+                <button type="button" id="LegregebbiKereses">Legrégebbi könyv</button>
+                <button type="button" id="LegnagyobbOldalszam">legvastagabb könyv</button>
+                <button type="button" id="AtlagOldalszam">Atlag oldalszám</button>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script src="App.js"></script>
+</html>
