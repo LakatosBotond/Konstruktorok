@@ -1,4 +1,5 @@
-//konstruktor
+
+ // Konstruktor
 function Konyv(cim, szerzo, kiadasiEv, oldalszám) {
     this.cim = cim;
     this.szerzo = szerzo;
@@ -15,78 +16,103 @@ const konyvek = [elsoKonyv, masodikKonyv, harmadikKonyv];
 
 const konyvekElem = document.getElementById("konyvek");
 
-// Könyvek megjelenítése
+// Könyvek táblázatos megjelenítése
 function megjelenitKonyvek() {
-    konyvekElem.innerHTML = "";
+    konyvekElem.innerHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Cím</th>
+                    <th>Szerző</th>
+                    <th>Kiadási év</th>
+                    <th>Oldalszám</th>
+                    <th>Állapot</th>
+                    <th>Művelet</th>
+                </tr>
+            </thead>
+            <tbody id="konyvekTabla"></tbody>
+        </table>
+    `;
 
-    konyvek.forEach(function(konyv) {
-        konyvekElem.innerHTML += `
-            <div class="konyv">
-                <h3>${konyv.cim}</h3>
-                <p>Szerző: ${konyv.szerzo}</p>
-                <p>Év: ${konyv.kiadasiEv}</p>
-                <p>Oldalak: ${konyv.oldalszam}</p>
-                <p>Állapot: ${konyv.kolcsonozve ? "Kölcsönözve" : "Kölcsönözhető"}</p>
+    const konyvekTabla = document.getElementById("konyvekTabla");
 
-                <button class="kolcsonozas" onclick="kolcsonzes(${konyvek.indexOf(konyv)})">
-                    ${konyv.kolcsonozve ? "Visszahozás" : "Kölcsönzés"}
-                </button>
-            </div>
-        `;  
+    konyvek.forEach(function(konyv, index) {
+        konyvekTabla.innerHTML += `
+            <tr>
+                <td>${konyv.cim}</td>
+                <td>${konyv.szerzo}</td>
+                <td>${konyv.kiadasiEv}</td>
+                <td>${konyv.oldalszam}</td>
+                <td>${konyv.kolcsonozve ? "Kölcsönözve" : "Kölcsönözhető"}</td>
+                <td>
+                    <button onclick="kolcsonzes(${index})">
+                        ${konyv.kolcsonozve ? "Visszahozás" : "Kölcsönzés"}
+                    </button>
+                </td>
+            </tr>
+        `;
     });
 }
 
 // Kölcsönzés és visszahozás
 function kolcsonzes(index) {
-    konyvek[index].kolcsonozve = !konyvek[index].kolcsonozve;
+    if (konyvek[index].kolcsonozve == false) {
+        konyvek[index].kolcsonozve = true;
+    } else {
+        konyvek[index].kolcsonozve = false;
+    }
+
     megjelenitKonyvek();
-};
-
-// function kolcsonzes(index) {
-//     if (konyvek[index].kolcsonozve == false) {
-//         konyvek[index].kolcsonozve = true;
-//     } else {
-//         konyvek[index].kolcsonozve = false;
-//     }
-
-//     megjelenitKonyvek();
-// }
-
+}
 
 // Könyv hozzáadása
 document.getElementById("HozzaadasBtn").addEventListener("click", function() {
-
     const ujKonyv = new Konyv(
         document.getElementById("cim").value,
         document.getElementById("szerzo").value,
-        document.getElementById("kiadasiEv").value,
+        Number(document.getElementById("kiadasiEv").value),
         Number(document.getElementById("oldalszam").value)
     );
 
     konyvek.push(ujKonyv);
-
     megjelenitKonyvek();
 });
 
-//szabad könyvek szürése, csak kölcsönözve == false megjelenítése
 // Szabad könyvek szűrése
 function szabadKonyvek() {
-    konyvekElem.innerHTML = "";
+    konyvekElem.innerHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Cím</th>
+                    <th>Szerző</th>
+                    <th>Kiadási év</th>
+                    <th>Oldalszám</th>
+                    <th>Állapot</th>
+                    <th>Művelet</th>
+                </tr>
+            </thead>
+            <tbody id="konyvekTabla"></tbody>
+        </table>
+    `;
+
+    const konyvekTabla = document.getElementById("konyvekTabla");
 
     konyvek.forEach(function(konyv, index) {
         if (konyv.kolcsonozve == false) {
-            konyvekElem.innerHTML += `
-                <div class="konyv">
-                    <h3>${konyv.cim}</h3>
-                    <p>Szerző: ${konyv.szerzo}</p>
-                    <p>Év: ${konyv.kiadasiEv}</p>
-                    <p>Oldalak: ${konyv.oldalszam}</p>
-                    <p>Állapot: Kölcsönözhető</p>
-
-                    <button class="kolcsonozas" onclick="kolcsonzes(${index})">
-                        Kölcsönzés
-                    </button>
-                </div>
+            konyvekTabla.innerHTML += `
+                <tr>
+                    <td>${konyv.cim}</td>
+                    <td>${konyv.szerzo}</td>
+                    <td>${konyv.kiadasiEv}</td>
+                    <td>${konyv.oldalszam}</td>
+                    <td>Kölcsönözhető</td>
+                    <td>
+                        <button onclick="kolcsonzes(${index})">
+                            Kölcsönzés
+                        </button>
+                    </td>
+                </tr>
             `;
         }
     });
@@ -99,9 +125,8 @@ document.getElementById("SzabadSzures").addEventListener("click", function() {
 
 // Összes könyv gomb
 document.getElementById("osszesKonyv").addEventListener("click", function() {
-        megjelenitKonyvek();
+    megjelenitKonyvek();
 });
-
 
 // Legrégebbi könyv
 function legregebbiKonyv() {
@@ -114,13 +139,22 @@ function legregebbiKonyv() {
     });
 
     konyvekElem.innerHTML = `
-        <div class="konyv">
-            <h3>Legrégebbi könyv:</h3>
-            <p>${legregebbi.cim} (${legregebbi.kiadasiEv})</p>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Legrégebbi könyv</th>
+                    <th>Kiadási év</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${legregebbi.cim}</td>
+                    <td>${legregebbi.kiadasiEv}</td>
+                </tr>
+            </tbody>
+        </table>
     `;
 }
-
 
 // Legvastagabb könyv
 function legvastagabbKonyv() {
@@ -133,13 +167,22 @@ function legvastagabbKonyv() {
     });
 
     konyvekElem.innerHTML = `
-        <div class="konyv">
-            <h3>Legvastagabb könyv:</h3>
-            <p>${legvastagabb.cim} (${legvastagabb.oldalszam} oldal)</p>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Legvastagabb könyv</th>
+                    <th>Oldalszám</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${legvastagabb.cim}</td>
+                    <td>${legvastagabb.oldalszam} oldal</td>
+                </tr>
+            </tbody>
+        </table>
     `;
 }
-
 
 // Átlagos oldalszám
 function atlagOldalszam() {
@@ -152,13 +195,20 @@ function atlagOldalszam() {
     let atlag = osszeg / konyvek.length;
 
     konyvekElem.innerHTML = `
-        <div class="konyv">
-            <h3>Átlagos oldalszám</h3>
-            <p>A könyvek átlagos oldalszáma: ${atlag.toFixed(0)} oldal</p>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Átlagos oldalszám</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${atlag.toFixed(0)} oldal</td>
+                </tr>
+            </tbody>
+        </table>
     `;
 }
-
 
 // Legrégebbi könyv gomb
 document.getElementById("LegregebbiKereses").addEventListener("click", function() {
@@ -175,4 +225,5 @@ document.getElementById("AtlagOldalszam").addEventListener("click", function() {
     atlagOldalszam();
 });
 
+// Könyvek megjelenítése betöltéskor
 megjelenitKonyvek();

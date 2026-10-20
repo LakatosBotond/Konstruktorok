@@ -1,4 +1,3 @@
-
 * {
     box-sizing: border-box;
 }
@@ -71,43 +70,41 @@ button:hover {
     background-color: #1d4ed8;
 }
 
-.konyvek {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Táblázat */
+
+#konyvek {
+    overflow-x: auto;
 }
 
-/* Egy könyv megjelenítési stílusa */
+#konyvek table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: white;
+}
 
-.konyv {
-    padding: 15px;
+#konyvek th,
+#konyvek td {
+    padding: 12px;
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    background-color: #f8fafc;
+    text-align: left;
 }
 
-.konyv h3 {
+#konyvek th {
+    background-color: #2563eb;
+    color: white;
+}
+
+#konyvek tr:nth-child(even) {
+    background-color: #f1f5f9;
+}
+
+#konyvek td button {
     margin-top: 0;
-    color: #1e40af;
 }
 
-.konyv p {
-    margin: 8px 0;
-}
-
-.konyv-gombok {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.visszahoz {
-    background-color: #16a34a;
-}
-
-.visszahoz:hover {
-    background-color: #15803d;
-}
+/* Mobilnézet */
 
 @media (max-width: 600px) {
     body {
