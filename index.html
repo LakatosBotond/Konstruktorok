@@ -29,12 +29,28 @@
                 <label for="oldalszam">Oldalszám:</label>
                 <input type="number" id="oldalszam" placeholder="Oldalak száma">
 
+                <label for="kategoria">Kategória:</label>
+                <select id="kategoria">
+                    <option value="Regény">Regény</option>
+                    <option value="Sci-fi">Sci-fi</option>
+                    <option value="Történelmi">Történelmi</option>
+                    <option value="Fantasy">Fantasy</option>
+                </select>
+
                 <button type="button" id="HozzaadasBtn">Könyv hozzáadása(és összes könyv megjelenitése :3)</button>
             </form>
         </div>
 
         <div class="panel">
             <h2>Könyvek listája</h2>
+            <label for="kategoriaSzures">Szűrés kategória szerint:</label>
+            <select id="kategoriaSzures">
+                <option value="Összes">Összes kategória</option>
+                <option value="Regény">Regény</option>
+                <option value="Sci-fi">Sci-fi</option>
+                <option value="Történelmi">Történelmi</option>
+                <option value="Fantasy">Fantasy</option>
+            </select>
 
             <div class="konyvek" id="konyvek">
 
